@@ -3,6 +3,7 @@ module Data.DiscreteSpaceMap (Pos(..), Map(..), modify) where
 
 import Control.Comonad
 import Control.Comonad.Store.Class
+import Data.Distributive
 import Data.Key
 import Data.Functor.Bind
 import Data.Functor.Rep
@@ -58,16 +59,20 @@ instance Pos p => ComonadStore p (Map p) where
   seek tp (Map sp a c) = let (a', c') = gotoD sp tp (a, c) in Map tp a' c'
   seeks f w = seek (f (pos w)) w
 
--- | @ `index` :: Pos p => Map p a -> p -> a@
 instance Pos p => Indexable (Map p) where
   index = flip peek
 instance Pos p => Lookup (Map p) where 
   lookup = lookupDefault
 instance Pos p => Adjustable (Map p) where
   adjust f p z = seek (pos z) . modify f . seek p $ z
+instance Pos p => Distributive (Map p) where
+  distribute = distributeRep
+-- | @ `index` :: Pos p => Map p a -> p -> a@
 -- | @ `tabulate` :: Pos p => (p -> a) -> Map p a@
 instance Pos p => Representable (Map p) where
+  type Rep (Map p) = p
   tabulate f = Map zero (f zero) (tabulateD f)
+  index = flip peek
 
 -- | @ `fmap` :: (a -> b) -> Map p a -> Map p b@
 instance Functor (Map p) where
