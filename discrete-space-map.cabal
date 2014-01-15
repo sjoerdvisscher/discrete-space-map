@@ -1,5 +1,5 @@
 name:                discrete-space-map
-version:             0.0.1
+version:             0.0.2
 synopsis:            A discrete space map.
 description:         A discrete space map implemented as a zipper on an infinite perfect binary tree.
 homepage:            https://github.com/sjoerdvisscher/discrete-space-map
@@ -14,9 +14,8 @@ cabal-version:       >=1.8
 library
   exposed-modules:     Data.DiscreteSpaceMap,
                        Data.DiscreteSpaceMap.Internal
-  build-depends:       base ==4.6.*,
-                       comonad ==3.*,
-                       comonads-fd ==3.0.*,
-                       keys ==3.0.*,
-                       semigroupoids ==3.*, 
-                       representable-functors ==3.0.*
+  build-depends:       base ==4.*,
+                       comonad ==4.*,
+                       keys ==3.*,
+                       semigroupoids ==4.*, 
+                       adjunctions ==4.*

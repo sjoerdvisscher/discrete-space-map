@@ -5,7 +5,7 @@ import Control.Comonad
 import Control.Comonad.Store.Class
 import Data.Key
 import Data.Functor.Bind
-import Data.Functor.Representable
+import Data.Functor.Rep
 import Data.Foldable
 import Data.Traversable
 import Data.Semigroup.Foldable
