@@ -69,6 +69,12 @@ gotoD sp tp | sp == tp = id
 tabulateD :: Pos p => (p -> a) -> MapD a
 tabulateD f = MapD (f (cons (zero, True))) $ tabulateD (\p -> (f (cons (p, False)), f (cons (p, True)))) 
 
+cotraverseD :: Functor f => (f a -> b) -> f (MapD a) -> MapD b
+cotraverseD f m = MapD (f $ hd <$> m) (cotraverseD (\fa2 -> (f $ fst <$> fa2, f $ snd <$> fa2)) (tl <$> m))
+  where
+    hd (MapD a _) = a
+    tl (MapD _ as) = as
+
 zipWithKeyD :: Pos p => (p -> a -> b -> c) -> p -> MapD a -> MapD b -> MapD c
 zipWithKeyD f p (MapD a ca) (MapD b cb) = 
   MapD (f pOther a b) (zipWithKeyD f' pUp ca cb)

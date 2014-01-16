@@ -1,5 +1,5 @@
 name:                discrete-space-map
-version:             0.0.2
+version:             0.0.3
 synopsis:            A discrete space map.
 description:         A discrete space map implemented as a zipper on an infinite perfect binary tree.
 homepage:            https://github.com/sjoerdvisscher/discrete-space-map

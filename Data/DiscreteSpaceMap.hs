@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeFamilies, MultiParamTypeClasses, FlexibleInstances #-}
+{-# LANGUAGE TypeFamilies, MultiParamTypeClasses, ViewPatterns, FlexibleInstances #-}
 module Data.DiscreteSpaceMap (Pos(..), Map(..), modify) where
 
 import Control.Comonad
@@ -65,10 +65,14 @@ instance Pos p => Lookup (Map p) where
   lookup = lookupDefault
 instance Pos p => Adjustable (Map p) where
   adjust f p z = seek (pos z) . modify f . seek p $ z
+
+-- | @ `distribute` :: Functor f => f (Map p a) -> Map p (f a)@
 instance Pos p => Distributive (Map p) where
-  distribute = distributeRep
--- | @ `index` :: Pos p => Map p a -> p -> a@
--- | @ `tabulate` :: Pos p => (p -> a) -> Map p a@
+  distribute (fmap (seek zero) -> m) = Map zero (fmap extract m) (cotraverseD id $ (\(Map _ _ c) -> c) <$> m)
+
+-- | @
+-- `index` :: Pos p => Map p a -> p -> a
+-- `tabulate` :: Pos p => (p -> a) -> Map p a@
 instance Pos p => Representable (Map p) where
   type Rep (Map p) = p
   tabulate f = Map zero (f zero) (tabulateD f)
