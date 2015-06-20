@@ -1,5 +1,5 @@
 name:                discrete-space-map
-version:             0.0.3
+version:             0.0.4
 synopsis:            A discrete space map.
 description:         A discrete space map implemented as a zipper on an infinite perfect binary tree.
 homepage:            https://github.com/sjoerdvisscher/discrete-space-map
@@ -18,5 +18,5 @@ library
                        comonad ==4.*,
                        keys ==3.*,
                        distributive >=0.4 && <1,
-                       semigroupoids ==4.*, 
+                       semigroupoids >=4.0 && <6.0,
                        adjunctions ==4.*
